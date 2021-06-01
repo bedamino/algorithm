@@ -87,6 +87,7 @@ public class 단절점찾기 {
 				//자식 노드의 방문 순서중 가장 작은 값
 				int low = dfs(next, false);
 				
+				//루트 노드가 아닌 경우에만 판별 가능
 				if(!isRoot && low >= in[cur]) {
 					cut[cur] = true;
 				}
@@ -99,6 +100,7 @@ public class 단절점찾기 {
 			}
 		}
 		
+		//루트 노드인 경우 자식이 2개 이상일 때 무조건 단절점
 		if(isRoot && child > 1) {
 			cut[cur] = true;
 		}
