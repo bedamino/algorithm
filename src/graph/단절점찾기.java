@@ -52,7 +52,7 @@ public class 단절점찾기 {
 		//문제에서 주어진 그래프가 연결 그래프가 아닐 수 있기 떄문에 모든 노드에 대해서 탐색
 		for(int i=1; i<=V; i++) {
 			if(!visit[i]) {
-				dfs(i, true);
+				dfs(i, 0, true);
 			}
 		}
 		
@@ -74,7 +74,7 @@ public class 단절점찾기 {
 		bw.close();
 	}
 
-	private static int dfs(int cur, boolean isRoot) {
+	private static int dfs(int cur, int parent, boolean isRoot) {
 		in[cur] = ++order;  //현재 노드 방문 순서
 		visit[cur] = true;
 		int child = 0;
@@ -82,10 +82,15 @@ public class 단절점찾기 {
 		int result = in[cur];
 		
 		for(int next : input[cur]) {
+			
+			//방문할 자식이 부모와 같다면 skip
+			if(parent == next) {
+				continue;
+			}
 			if(!visit[next]) {
 				child++;
 				//자식 노드의 방문 순서중 가장 작은 값
-				int low = dfs(next, false);
+				int low = dfs(next, cur, false);
 				
 				//루트 노드가 아닌 경우에만 판별 가능
 				if(!isRoot && low >= in[cur]) {
