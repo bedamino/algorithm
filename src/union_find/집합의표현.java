@@ -82,10 +82,12 @@ public class 집합의표현 {
 	}
 
 	private static int find(int a) {
+		//root배열의 값과 인덱스가 같다면 해당 집합의 대표값
 		if(a == root[a]) {
 			return a;
 		}
 		
+		//탐색 시, 트리 높이 최적화
 		return root[a] = find(root[a]);
 	}
 }
