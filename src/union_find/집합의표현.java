@@ -14,6 +14,7 @@ public class 집합의표현 {
 	private static int N;
 	private static int M;
 	private static int[] root;
+	private static int[] rank;
 	
 	public static void main(String[] args) throws IOException {
 		System.setIn(new FileInputStream(new File("집합의표현")));
@@ -26,6 +27,7 @@ public class 집합의표현 {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		root = new int[N+1];
+		rank = new int[N+1];
 		for(int i=1; i<=N; i++) {
 			root[i] = i;
 		}
@@ -56,14 +58,27 @@ public class 집합의표현 {
 	}
 
 	private static void union(int a, int b) {
-		int rA = find(a);
-		int rB = find(b);
+		int A = find(a);
+		int B = find(b);
 		
-		if(rA == rB) {
+		//두 집합의 대표값이 같은 경우 
+		if(A == B) {
 			return;
 		}
 		
-		root[rB] = rA;
+		//B 집합 트리의 높이가 더 높을 때, A 집합 트리를 B 집합 트리의 밑으로 붙임
+		if(rank[A] < rank[B]) {
+			root[A] = B;
+			
+		}else {
+			//A 집합 트리의 높이가 더 높을 때, B 집합 트리를 A 집합 트리의 밑으로 붙임
+			root[B] = A;
+			
+			//두 집합 트리의 높이가 같다면 높이를 1 증가 시킴
+			if(rank[A] == rank[B]) {
+				rank[A]++;
+			}
+		}
 	}
 
 	private static int find(int a) {
