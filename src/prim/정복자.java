@@ -68,7 +68,7 @@ public class 정복자 {
 					continue;
 				}
 				
-				pq.add(next);
+				pq.add(new Node(next.to, next.cost));
 			}
 			
 			min += cur.cost;

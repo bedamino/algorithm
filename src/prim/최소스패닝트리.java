@@ -68,7 +68,7 @@ public class 최소스패닝트리 {
 				if(visit[next.to]) {
 					continue;
 				}
-				pq.add(next);
+				pq.add(new Node(next.to, next.cost));
 			}
 			
 			//처리가 완료된 노드의 가중치 합산
