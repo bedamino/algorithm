@@ -31,7 +31,7 @@ public class 복도뚫기 {
 			
 			W = Integer.parseInt(br.readLine());
 			N = Integer.parseInt(br.readLine());
-			input = new int[N][3];
+			input = new int[N][3]; //0:x, 1:y, 2:r
 			root = new int[N+2];
 			for(int i=0; i<N+2; i++) {
 				root[i] = i;
