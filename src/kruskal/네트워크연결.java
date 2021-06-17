@@ -14,7 +14,7 @@ public class 네트워크연결 {
 	
 	private static int N;
 	private static int M;
-	private static PriorityQueue<Node> pq;
+	private static PriorityQueue<Edge> pq;
 	private static int[] root;
 	
 	public static void main(String[] args) throws IOException {
@@ -30,7 +30,7 @@ public class 네트워크연결 {
 		for(int i=1; i<=N; i++) {
 			root[i] = i;
 		}
-		pq = new PriorityQueue<Node>();
+		pq = new PriorityQueue<Edge>();
 		
 		for(int i=0; i<M; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -38,22 +38,22 @@ public class 네트워크연결 {
 			int b = Integer.parseInt(st.nextToken());
 			int cost = Integer.parseInt(st.nextToken());
 			
-			pq.add(new Node(a, b, cost));
+			pq.add(new Edge(a, b, cost));
 		}
 		
 		int min = 0;
 		while(!pq.isEmpty()) {
-			Node cur = pq.poll();
+			Edge edge = pq.poll();
 			
-			int a = find(cur.from);
-			int b = find(cur.to);
+			int a = find(edge.from);
+			int b = find(edge.to);
 			
 			if(a == b) {
 				continue;
 			}
 			
 			root[b] = a;
-			min += cur.cost;
+			min += edge.cost;
 		}
 		
 		bw.append(String.valueOf(min));
@@ -67,19 +67,19 @@ public class 네트워크연결 {
 		return root[a] = find(root[a]);
 	}
 
-	public static class Node implements Comparable<Node>{
+	public static class Edge implements Comparable<Edge>{
 		public int from;
 		public int to;
 		public int cost;
 		
-		public Node(int from, int to, int cost) {
+		public Edge(int from, int to, int cost) {
 			this.from = from;
 			this.to = to;
 			this.cost = cost;
 		}
 
 		@Override
-		public int compareTo(Node o) {
+		public int compareTo(Edge o) {
 			return this.cost - o.cost;
 		}
 	}

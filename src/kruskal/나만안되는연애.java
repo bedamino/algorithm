@@ -16,7 +16,7 @@ public class 나만안되는연애 {
 	private static int M;
 	private static String[] input;
 	private static int[] root;
-	private static PriorityQueue<Node> pq;
+	private static PriorityQueue<Edge> pq;
 	
 	public static void main(String[] args) throws IOException {
 		System.setIn(new FileInputStream(new File("나만안되는연애")));
@@ -40,7 +40,7 @@ public class 나만안되는연애 {
 			input[i] = st.nextToken();
 		}
 		
-		pq = new PriorityQueue<Node>();
+		pq = new PriorityQueue<Edge>();
 		
 		for(int i=1; i<=M; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -48,24 +48,24 @@ public class 나만안되는연애 {
 			int b = Integer.parseInt(st.nextToken());
 			int cost = Integer.parseInt(st.nextToken());
 			
-			pq.add(new Node(a, b, cost));
+			pq.add(new Edge(a, b, cost));
 		}
 		
 		int min = 0;
 		int count = 0;
 		while(!pq.isEmpty()) {
-			Node node = pq.poll();
+			Edge edge = pq.poll();
 			
-			int a = find(node.from);
-			int b = find(node.to);
+			int a = find(edge.from);
+			int b = find(edge.to);
 			
 			//두 학교가 이미 연결 되어 있거나, 남학교와 여학교를 연결하는 도로가 아닌 경우
-			if((a == b) || input[node.from].equals(input[node.to])) {
+			if((a == b) || input[edge.from].equals(input[edge.to])) {
 				continue;
 			}
 			
 			root[b] = a;
-			min += node.cost;
+			min += edge.cost;
 			count++;
 		}
 		
@@ -86,19 +86,19 @@ public class 나만안되는연애 {
 		return root[a] = find(root[a]);
 	}
 
-	public static class Node implements Comparable<Node> {
+	public static class Edge implements Comparable<Edge> {
 		public int from;
 		public int to;
 		public int cost;
 		
-		public Node(int from, int to, int cost) {
+		public Edge(int from, int to, int cost) {
 			this.from = from;
 			this.to = to;
 			this.cost = cost;
 		}
 
 		@Override
-		public int compareTo(Node o) {
+		public int compareTo(Edge o) {
 			return this.cost - o.cost;
 		}
 	}

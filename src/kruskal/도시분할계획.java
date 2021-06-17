@@ -15,7 +15,7 @@ public class 도시분할계획 {
 	private static int N;
 	private static int M;
 	private static int[] root;
-	private static PriorityQueue<Node> pq;
+	private static PriorityQueue<Edge> pq;
 	
 	public static void main(String[] args) throws IOException {
 		System.setIn(new FileInputStream(new File("도시분할계획")));
@@ -33,7 +33,7 @@ public class 도시분할계획 {
 			root[i] = i;
 		}
 		
-		pq = new PriorityQueue<Node>();
+		pq = new PriorityQueue<Edge>();
 		
 		for(int i=1; i<=M; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -41,28 +41,28 @@ public class 도시분할계획 {
 			int b = Integer.parseInt(st.nextToken());
 			int cost = Integer.parseInt(st.nextToken());
 			
-			pq.add(new Node(a, b, cost));
+			pq.add(new Edge(a, b, cost));
 		}
 		
 		int min = 0;
 		int count = 0;
 		while(!pq.isEmpty()) {
-			Node cur = pq.poll();
+			Edge edge = pq.poll();
 			
 			//연결된 간선의 갯수가 노드수-1개 일 때가 최소스패닝트리가 되므로, 노드수-2개 일 때 반복문 종료 
 			if(count == N-2) {
 				break;
 			}
 			
-			int a = find(cur.from);
-			int b = find(cur.to);
+			int a = find(edge.from);
+			int b = find(edge.to);
 			
 			if(a == b) {
 				continue;
 			}
 			
 			root[b] = a;
-			min += cur.cost;
+			min += edge.cost;
 			count++; //연결된 간선의 갯수
 		}
 		
@@ -77,19 +77,19 @@ public class 도시분할계획 {
 		return root[a] = find(root[a]);
 	}
 
-	public static class Node implements Comparable<Node>{
+	public static class Edge implements Comparable<Edge>{
 		public int from;
 		public int to;
 		public int cost;
 		
-		public Node(int from, int to, int cost) {
+		public Edge(int from, int to, int cost) {
 			this.from = from;
 			this.to = to;
 			this.cost = cost;
 		}
 
 		@Override
-		public int compareTo(Node o) {
+		public int compareTo(Edge o) {
 			return this.cost - o.cost;
 		}
 	}

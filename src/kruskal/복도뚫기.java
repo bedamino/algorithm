@@ -16,7 +16,7 @@ public class 복도뚫기 {
 	private static int W;
 	private static int N;
 	private static int[][] input;
-	private static PriorityQueue<Node> pq;
+	private static PriorityQueue<Edge> pq;
 	private static int[] root;
 	
 	public static void main(String[] args) throws IOException {
@@ -45,28 +45,28 @@ public class 복도뚫기 {
 				input[i][2] = Integer.parseInt(st.nextToken());
 			}
 			
-			pq = new PriorityQueue<Node>();
-			pq.add(new Node(N, N+1, W)); //왼쪽벽과 오른쪽벽 사이의 거리
+			pq = new PriorityQueue<Edge>();
+			pq.add(new Edge(N, N+1, W)); //왼쪽벽과 오른쪽벽 사이의 거리
 			
 			for(int i=0; i<N; i++) {
 				double dist = input[i][0] - input[i][2]; //왼쪽벽까지의 거리
-				pq.add(new Node(N, i, dist));
+				pq.add(new Edge(N, i, dist));
 				
 				dist = W - input[i][0] - input[i][2]; //오른쪽벽까지의 거리
-				pq.add(new Node(i, N+1, dist));
+				pq.add(new Edge(i, N+1, dist));
 				
 				//다른 센서들까지의 거리
 				for(int j=i+1; j<N; j++) {
 					dist = dist(input[i], input[j]);
-					pq.add(new Node(i, j, dist));
+					pq.add(new Edge(i, j, dist));
 				}
 			}
 			
 			while(!pq.isEmpty()) {
-				Node node = pq.poll();
+				Edge edge = pq.poll();
 				
-				int a = find(node.from);
-				int b = find(node.to);
+				int a = find(edge.from);
+				int b = find(edge.to);
 				
 				if(a == b) {
 					continue;
@@ -75,10 +75,10 @@ public class 복도뚫기 {
 				root[b] = a;
 				
 				if(find(N) == find(N+1)) { //왼쪽벽과 오른쪽벽이 같은 그룹인지 확인
-					if(node.dist <= 0) {
+					if(edge.dist <= 0) {
 						bw.append("0").append("\n"); //지나갈 수 없음
 					}else {
-						bw.append(String.format("%.6f", node.dist/2)).append("\n");
+						bw.append(String.format("%.6f", edge.dist/2)).append("\n");
 					}
 					break;
 				}
@@ -100,19 +100,19 @@ public class 복도뚫기 {
 		return Math.sqrt(Math.pow((b[0]-a[0]), 2) + Math.pow((b[1]-a[1]), 2)) - a[2] - b[2];
 	}
 
-	public static class Node implements Comparable<Node>{
+	public static class Edge implements Comparable<Edge>{
 		public int from;
 		public int to;
 		public double dist;
 		
-		public Node(int from, int to, double dist) {
+		public Edge(int from, int to, double dist) {
 			this.from = from;
 			this.to = to;
 			this.dist = dist;
 		}
 
 		@Override
-		public int compareTo(Node o) {
+		public int compareTo(Edge o) {
 			return Double.compare(this.dist, o.dist); //double compare
 		}
 	}
