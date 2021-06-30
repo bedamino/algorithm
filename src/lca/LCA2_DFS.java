@@ -16,6 +16,8 @@ public class LCA2_DFS {
 	private static int N;
 	private static int M;
 	private static List<Integer>[] input;
+	private static int NN;
+	private static int LIMIT;
 	private static int[] in; //진입
 	private static int[] out; //진출
 	private static int count; //진입 or 진출 순서
@@ -34,9 +36,15 @@ public class LCA2_DFS {
 			input[i] = new ArrayList<Integer>();
 		}
 		
+		NN = 1;
+		while(N > NN) {
+			NN*=2;
+			LIMIT++;
+		}
+		
 		in = new int[N+1];
 		out = new int[N+1];
-		sparse = new int[N+1][20];
+		sparse = new int[N+1][LIMIT];
 		
 		for(int i=1; i<N; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -72,7 +80,7 @@ public class LCA2_DFS {
 			return a; //최소 공통 조상은 a
 		}
 		
-		int pos = 19; //a의 2^19번째 조상부터 탐색
+		int pos = LIMIT-1; //a의 2^(LIMIT-1)번째 조상부터 탐색
 		while(pos >= 0) {
 			int cur = sparse[a][pos];
 			
@@ -96,7 +104,7 @@ public class LCA2_DFS {
 	}
 
 	private static void setSparse() {
-		for(int j=1; j<20; j++) {
+		for(int j=1; j<LIMIT; j++) {
 			for(int i=1; i<=N; i++) {
 				if(sparse[i][j-1] == -1) {
 					sparse[i][j] = -1; //노드 i의 2^(j-1)번째 조상이 없다면 2^j번째 조상도 없음
