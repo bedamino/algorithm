@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class LCA2 {
+public class LCA2_DFS {
 	
 	private static int N;
 	private static int M;
