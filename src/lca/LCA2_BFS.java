@@ -20,7 +20,7 @@ public class LCA2_BFS {
 	private static int NN;
 	private static int LIMIT;
 	private static List<Integer>[] input;
-	private static int[] depth;
+	private static int[] depth; //노드의 깊이
 	private static int[][] sparse; //희소 배열
 	
 	public static void main(String[] args) throws IOException {
@@ -54,9 +54,9 @@ public class LCA2_BFS {
 			input[b].add(a);
 		}
 		
-		sparse[1][0] = -1;
-		setDepth();
-		setSparse();
+		sparse[1][0] = -1; //루트의 2^0번째 조상은 없다.
+		setDepth(); //BFS로 각 노드들의 깊이와 2^0번째 조상 확정
+		setSparse(); //각 노드들에 대하여 2^0번째 조상을 제외한 나머지 조상 확정
 		
 		M = Integer.parseInt(br.readLine());
 		
@@ -74,28 +74,29 @@ public class LCA2_BFS {
 	}
 
 	private static int lca(int a, int b) {
+		//a의 깊이가 b의 깊이보다 항상 크게끔 변경
 		if(depth[a] < depth[b]) {
 			int temp = a;
 			a = b;
 			b = temp;
 		}
 		
-		int diff = depth[a] - depth[b];
-		
-		int pos = 0;
-		while(diff > 0) {
-			if(diff%2 == 1) {
+		//a의 깊이를 b의 깊이와 동일하게 변경
+		int pos = LIMIT-1;
+		while(pos >= 0) {
+			//a와 b의 깊이 차이가 2^pos보다 크거나 같다면 a의 위치를 2^pos번째 조상 위치로 변경
+			if(depth[a] - depth[b] >= 1<<pos) {
 				a = sparse[a][pos];
 			}
-			
-			diff/=2;
-			pos++;
+			pos--;
 		}
 		
+		//a의 깊이를 b의 깊이와 동일하게 변경했을 때, a와 b가 같다면 최소 공통 조상은 a
 		if(a == b) {
 			return a;
 		}
-		
+
+		//a와 b의 깊이를 동시에 변경하며 최소 공통 조상의 자식 노드를 탐색
 		pos = LIMIT-1;
 		while(pos >= 0) {
 			if(sparse[a][pos] != sparse[b][pos]) {
@@ -105,6 +106,7 @@ public class LCA2_BFS {
 			pos--;
 		}
 		
+		//a는 최소 공통 조상의 자식이므로, a의 부모가 최소 공통 조상
 		return sparse[a][0];
 	}
 
@@ -112,10 +114,10 @@ public class LCA2_BFS {
 		for(int j=1; j<LIMIT; j++) {
 			for(int i=1; i<=N; i++) {
 				if(sparse[i][j-1] == -1) {
-					sparse[i][j] = -1;
+					sparse[i][j] = -1; //노드 i의 2^(j-1)번째 조상이 없다면 2^j번째 조상도 없음
 					continue;
 				}
-				sparse[i][j] = sparse[sparse[i][j-1]][j-1];
+				sparse[i][j] = sparse[sparse[i][j-1]][j-1]; //노드 i의 2^j번째 조상 확정
 			}
 		}
 	}
