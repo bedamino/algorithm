@@ -91,7 +91,7 @@ public class LCA2_BFS {
 			pos--;
 		}
 		
-		//a의 깊이를 b의 깊이와 동일하게 변경했을 때, a와 b가 같다면 최소 공통 조상은 a
+		//a의 깊이를 b의 깊이와 동일하게 변경했을 때, a와 b가 같다면 최소 공통 조상은 a(b)
 		if(a == b) {
 			return a;
 		}
@@ -106,7 +106,7 @@ public class LCA2_BFS {
 			pos--;
 		}
 		
-		//a는 최소 공통 조상의 자식이므로, a의 부모가 최소 공통 조상
+		//a(b)는 최소 공통 조상의 자식이므로, a(b)의 부모가 최소 공통 조상
 		return sparse[a][0];
 	}
 
