@@ -37,6 +37,7 @@ public class LCA2_DFS {
 		}
 		
 		NN = 1;
+		LIMIT = 0;
 		while(N > NN) {
 			NN*=2;
 			LIMIT++;
