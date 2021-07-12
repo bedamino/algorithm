@@ -59,6 +59,10 @@ public class 최단경로 {
 		while(!pq.isEmpty()) {
 			Node cur = pq.poll();
 			
+			if(min[cur.node] > cur.dist) {
+				continue;
+			}
+			
 			for(Node next : input[cur.node]) {
 				//이미 저장되어 있는 다음 노드까지의 최단 거리보다 (현재 노드까지의 최단 거리 + 다음 노드)까지의 거리가 작으면 갱신 
 				if(min[next.node] > cur.dist + next.dist) {
