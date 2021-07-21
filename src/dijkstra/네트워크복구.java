@@ -75,18 +75,10 @@ public class 네트워크복구 {
 			}
 		}
 		
-		int count = 0;
-		for(int i=2; i<=N; i++) {
-			if(min[i] != INF) {
-				count++;
-			}
-		}
-		bw.append(String.valueOf(count)).append("\n");
+		bw.append(String.valueOf(N-1)).append("\n");
 		
 		for(int i=2; i<=N; i++) {
-			if(min[i] != INF) {
-				bw.append(i + " " + path[i]).append("\n");
-			}
+			bw.append(i + " " + path[i]).append("\n");
 		}
 		
 		bw.close();
