@@ -27,7 +27,7 @@ public class 전깃줄 {
 		input = new Line[N];
 		lis = new int[N+1];
 		Arrays.fill(lis, INF);
-		
+		 
 		for(int i=0; i<N; i++) {
 			st = new StringTokenizer(br.readLine());
 			int a = Integer.parseInt(st.nextToken());
