@@ -40,7 +40,7 @@ public class 상자넣기 {
 			int r = box.length;
 			int mid = 0;
 			
-			//동일한 크기의 상자가 들어올 수 있으므로 lower bound를 구한다.
+			//동일한 크기의 상자가 들어올 수 있으므로 lower bound를 구한다. 
 			while(l < r) {
 				mid = (l+r)/2;
 				
