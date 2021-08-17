@@ -35,7 +35,7 @@ public class 전깃줄 {
 			
 			input[i] = new Line(a, b);
 		}
-		
+		 
 		Arrays.sort(input);
 	
 		int answer = Integer.MIN_VALUE;
